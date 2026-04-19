@@ -1,0 +1,36 @@
+<mat-sidenav-container class="layout-container">
+
+  <!-- Sidebar -->
+  <mat-sidenav mode="side" opened class="sidenav">
+    <div class="logo">
+      <i class="fas fa-industry"></i>
+      <span>SCADA</span>
+    </div>
+
+    <mat-nav-list>
+      <a mat-list-item routerLink="/alarms" routerLinkActive="active">
+        <i class="fas fa-bell"></i>
+        <span>Alarmas</span>
+      </a>
+
+      <a mat-list-item routerLink="/metrics" routerLinkActive="active">
+        <i class="fas fa-chart-bar"></i>
+        <span>Métricas</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!-- Content -->
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <span>SCADA Alarm Gateway</span>
+      <span class="spacer"></span>
+      <i class="fas fa-user-circle"></i>
+    </mat-toolbar>
+
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
