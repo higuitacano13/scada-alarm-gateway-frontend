@@ -1,9 +1,20 @@
+.page-header {
+  margin-bottom: 16px;
+}
+
 .page-title {
   display: flex;
   align-items: center;
   gap: 10px;
   font-weight: 600;
 }
+
+.page-description {
+  margin: 4px 0 0 0;
+  font-size: 14px;
+  color: #6b7280;
+}
+
 
 .alarm-icon {
   color: #c62828
@@ -82,4 +93,10 @@ tr.mat-row:hover {
   display: flex;
   justify-content: center;
   padding: 32px;
+}
+
+.page-description {
+  margin: 4px 0 16px 0;
+  color: #6b7280;
+  font-size: 14px;
 }

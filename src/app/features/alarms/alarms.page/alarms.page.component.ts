@@ -66,11 +66,14 @@ export class AlarmsPageComponent {
     });
   }
 
-  applyFilters() {  
+  applyFilters(resetPage: boolean = false) {  
   
-    this.offset = 0;
-    if (this.paginator) {
-      this.paginator.firstPage();
+
+    if (resetPage) {
+      this.offset = 0;
+      if (this.paginator) {
+        this.paginator.firstPage();
+      }
     }
 
     const value = this.form.value;

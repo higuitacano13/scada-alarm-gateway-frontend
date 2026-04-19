@@ -1,7 +1,14 @@
-<h2 class="page-title">
-  <i class="fas fa-bell alarm-icon"></i>
-  Alarmas
-</h2>
+<header class="page-header">
+  <h2 class="page-title">
+    <i class="fas fa-bell alarm-icon"></i>
+    Alarmas
+  </h2>
+
+  <p class="page-description">
+    Monitoreo y consulta de eventos de alarma provenientes de sistemas SCADA,
+    con filtros por tiempo, severidad y activo.
+  </p>
+</header>
 
 <mat-card class="filters">
   <form class="filters-form">
@@ -37,7 +44,7 @@
     </mat-form-field>
 
     <div class="filter-action">
-      <button mat-raised-button color="primary" class="filter-btn" (click)="applyFilters()">
+      <button mat-raised-button color="primary" class="filter-btn" (click)="applyFilters(true)">
         <i class="fas fa-filter"></i>
         Filtrar
       </button>
