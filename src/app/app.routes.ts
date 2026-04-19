@@ -13,6 +13,12 @@ export const routes: Routes = [
             .then(m => m.AlarmsPageComponent)
       },
       {
+        path: 'metrics',
+        loadComponent: () =>
+          import('./features/metrics/metrics.page/metrics.page.component')
+            .then(m => m.MetricsPageComponent)
+      },
+      {
         path: '',
         redirectTo: 'alarms',
         pathMatch: 'full'

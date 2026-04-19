@@ -1,0 +1,85 @@
+<header class="page-header">
+  <div class="header-left">
+    <div class="icon-wrapper">
+      <i class="fas fa-chart-bar"></i>
+    </div>
+
+    <div>
+      <h2 class="page-title">Métricas</h2>
+      <p class="page-description">
+        Visualización agregada de eventos SCADA para análisis de carga,
+        recurrencia y distribución de alarmas.
+      </p>
+    </div>
+  </div>
+</header>
+
+
+
+<mat-card class="metrics-filters">
+
+  <div class="filters-row">
+    <mat-form-field appearance="outline">
+      <mat-label>Desde</mat-label>
+      <input matInput [matDatepicker]="fromPicker" [formControl]="fromDate">
+      <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+      <mat-datepicker #fromPicker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Hasta</mat-label>
+      <input matInput [matDatepicker]="toPicker" [formControl]="toDate">
+      <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+      <mat-datepicker #toPicker></mat-datepicker>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="applyFilters()">
+      <i class="fas fa-filter"></i>
+      Aplicar
+    </button>
+  </div>
+
+  <div class="actions-row">
+    <button mat-stroked-button>
+      <i class="fas fa-database"></i>
+      Generar dataset
+    </button>
+
+    <button mat-raised-button color="primary">
+      <i class="fas fa-upload"></i>
+      Cargar dataset
+    </button>
+  </div>
+
+</mat-card>
+
+
+
+<!-- Grid -->
+<div class="metrics-grid">
+
+  <!-- Top Tags -->
+  <mat-card>
+    <div class="card-header">
+      <div>
+        <h3>Top Tags con más Alarmas</h3>
+        <span class="card-subtitle">Top 10 tags más activos</span>
+      </div>
+    </div>
+
+    <div #topTagsChart class="plotly-chart"></div>
+  </mat-card>
+
+  <!-- Distribución -->
+  <mat-card>
+    <div class="card-header">
+      <div>
+        <h3>Distribución por Tag</h3>
+        <span class="card-subtitle">Proporción de eventos</span>
+      </div>
+    </div>
+
+    <div #distributionChart class="plotly-chart"></div>
+  </mat-card>
+
+</div>
