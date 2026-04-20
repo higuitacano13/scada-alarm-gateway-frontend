@@ -1,0 +1,31 @@
+<h2 mat-dialog-title class="dialog-title">Generar dataset</h2>
+
+<form [formGroup]="form" mat-dialog-content class="dialog-content">
+
+  <br>
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Cantidad de registros</mat-label>
+    <input matInput type="number" formControlName="size" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Formato</mat-label>
+    <mat-select formControlName="format">
+      <mat-option value="json">JSON</mat-option>
+      <mat-option value="csv">CSV</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</form>
+
+<mat-dialog-actions class="actions">
+  <span class="spacer"></span>
+
+    <button mat-raised-button color="primary"
+          (click)="confirm()"
+          [disabled]="form.invalid">
+    Generar
+  </button>
+
+  <button mat-button (click)="close()">Cancelar</button>
+</mat-dialog-actions>

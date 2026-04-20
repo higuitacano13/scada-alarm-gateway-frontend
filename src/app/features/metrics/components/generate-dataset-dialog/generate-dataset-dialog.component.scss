@@ -1,0 +1,44 @@
+.dialog-title {
+  font-size: 20px;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 8px;
+  min-width: 320px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 0 8px;
+  width: 100%;
+}
+
+button[mat-raised-button] {
+  border-radius: 20px;
+  padding: 0 20px;
+}
+
+button[mat-button] {
+  opacity: 0.8;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+}
+
+.spacer {
+  flex: 1;
+}
+

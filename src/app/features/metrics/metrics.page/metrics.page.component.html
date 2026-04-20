@@ -40,15 +40,32 @@
   </div>
 
   <div class="actions-row">
-    <button mat-stroked-button>
+    <button mat-stroked-button 
+            (click)="generateDataset()" 
+            [disabled]="loading">
       <i class="fas fa-database"></i>
       Generar dataset
     </button>
 
-    <button mat-raised-button color="primary">
+    <input
+      type="file"
+      #fileInput
+      accept=".json,.csv"
+      style="display: none"
+      (change)="onFileSelected($event)"
+    />
+
+    <!-- Botón existente -->
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="fileInput.click()"
+      [disabled]="loading"
+    >
       <i class="fas fa-upload"></i>
       Cargar dataset
     </button>
+
   </div>
 
 </mat-card>

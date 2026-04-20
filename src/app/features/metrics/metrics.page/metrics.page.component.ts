@@ -11,8 +11,10 @@ import { MetricsService } from '../../../core/services/metrics.service';
 import Swal from 'sweetalert2';
 import { TopTagMetric } from '../../../shared/models/metric.model';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-
-
+import { IngestionService } from '../../../core/services/ingestion.service';
+import { MatDialog } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
+import { GenerateDatasetDialogComponent } from '../components/generate-dataset-dialog/generate-dataset-dialog.component';
 
 @Component({
   selector: 'app-metrics.page',
@@ -23,7 +25,8 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
     MatNativeDateModule,
     MatInputModule,
     MatButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule
   ],
   templateUrl: './metrics.page.component.html',
   styleUrl: './metrics.page.component.scss'
@@ -37,6 +40,8 @@ export class MetricsPageComponent implements AfterViewInit {
   distributionChart!: ElementRef;
 
   private readonly metricsService = inject(MetricsService);
+  private readonly ingestionService = inject(IngestionService);
+  private dialog = inject(MatDialog);
   private cdr = inject(ChangeDetectorRef);
 
   loading = false;
@@ -69,7 +74,6 @@ export class MetricsPageComponent implements AfterViewInit {
       this.loadMetrics();
     }
   }
-
 
   async renderTopTagsChart() {
     const Plotly = await import('plotly.js-dist-min');
@@ -175,4 +179,113 @@ export class MetricsPageComponent implements AfterViewInit {
       this.toDate.value.toISOString()
     );
   }
+
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+
+    if (!input.files || input.files.length === 0) {
+      return;
+    }
+
+    const file = input.files[0];
+
+    this.uploadDataset(file);
+    input.value = '';
+  }
+
+  uploadDataset(file: File) {
+    this.loading = true;
+
+    Swal.fire({
+      title: 'Cargando dataset',
+      text: 'Procesando archivo…',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    });
+
+    this.ingestionService.uploadDataset(file).subscribe({
+      next: (res) => {
+        this.loading = false;
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Dataset procesado',
+          html: `
+            <strong>Archivo:</strong> ${res.file}<br>
+            <strong>Total registros:</strong> ${res.total}<br>
+            <strong>Insertados:</strong> ${res.inserted}<br>
+            <strong>Inválidos:</strong> ${res.invalid}<br>
+            <strong>Error DB:</strong> ${res.failed_db}
+          `
+        });
+        this.loadMetrics();
+      },
+      error: () => {
+        this.loading = false;
+
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al cargar dataset',
+          text: 'No fue posible procesar el archivo'
+        });
+      }
+    });
+  }
+
+  generateDataset() {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
+    const dialogRef = this.dialog.open(GenerateDatasetDialogComponent, {
+      width: '400px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (!result) return;
+
+      this.loading = true;
+
+      this.ingestionService.generateDataset({
+        size: result.size!,
+        file_format: result.format!
+      }).subscribe({
+        next: (response) => {
+          this.loading = false;
+
+          const cd = response.headers.get('content-disposition');
+          const now = new Date();
+
+          const timestamp = now.toISOString()
+            .replace(/[-:]/g, '')
+            .split('.')[0];
+
+          let filename = `alarms_generated_${timestamp}.${result.format}`;
+
+          if (cd) {
+            const match = cd.match(/filename="?(.+)"?/);
+            if (match?.[1]) filename = match[1];
+          }
+
+          const blob = response.body!;
+          const url = URL.createObjectURL(blob);
+
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = filename;
+          a.click();
+
+          URL.revokeObjectURL(url);
+
+          this.loadMetrics();
+        },
+        error: () => {
+          this.loading = false;
+        }
+      });
+    });
+  }
+
 }
