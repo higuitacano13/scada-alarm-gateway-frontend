@@ -150,7 +150,7 @@ Estas librerías fueron elegidas para demostrar integración realista de tecnolo
 ### 1️⃣ Clonar el repositorio
 
 ```bash
-git clone <repo-frontend>
+git clone https://github.com/higuitacano13/scada-alarm-gateway-frontend.git
 cd scada-gateway-frontend
 ```
 
