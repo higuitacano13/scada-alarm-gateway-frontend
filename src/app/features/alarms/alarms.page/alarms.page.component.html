@@ -10,39 +10,48 @@
   </p>
 </header>
 
-<form [formGroup]="form" class="filters-form">
+<mat-card class="filters">
+  <form [formGroup]="form" class="filters-form">
 
-  <mat-form-field appearance="outline">
-    <mat-label>Desde</mat-label>
-    <input matInput [matDatepicker]="fromPicker" formControlName="from_date">
-    <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
-    <mat-datepicker #fromPicker></mat-datepicker>
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Desde</mat-label>
+      <input matInput [matDatepicker]="fromPicker" formControlName="from_date">
+      <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+      <mat-datepicker #fromPicker></mat-datepicker>
+    </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Hasta</mat-label>
-    <input matInput [matDatepicker]="toPicker" formControlName="to_date">
-    <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
-    <mat-datepicker #toPicker></mat-datepicker>
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Hasta</mat-label>
+      <input matInput [matDatepicker]="toPicker" formControlName="to_date">
+      <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+      <mat-datepicker #toPicker></mat-datepicker>
+    </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Severidad</mat-label>
-    <mat-select formControlName="severity">
-      <mat-option value="">Todas</mat-option>
-      <mat-option value="1">1 - Crítica</mat-option>
-      <mat-option value="2">2 - Alta</mat-option>
-      <mat-option value="3">3 - Media</mat-option>
-      <mat-option value="4">4 - Baja</mat-option>
-    </mat-select>
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Severidad</mat-label>
+      <mat-select formControlName="severity">
+        <mat-option value="">Todas</mat-option>
+        <mat-option value="1">1 - Crítica</mat-option>
+        <mat-option value="2">2 - Alta</mat-option>
+        <mat-option value="3">3 - Media</mat-option>
+        <mat-option value="4">4 - Baja</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Tag</mat-label>
-    <input matInput placeholder="Ej: PUMP_01" formControlName="tag">
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Tag</mat-label>
+      <input matInput placeholder="Ej: PUMP_01" formControlName="tag">
+    </mat-form-field>
+    
+    <div class="filter-action">
+      <button mat-raised-button color="primary" class="filter-btn" (click)="applyFilters(true)">
+      <i class="fas fa-filter"></i>
+      Filtrar
+      </button>
+    </div>
 
-</form>
+  </form>
+</mat-card>
 
 <mat-card>
 
