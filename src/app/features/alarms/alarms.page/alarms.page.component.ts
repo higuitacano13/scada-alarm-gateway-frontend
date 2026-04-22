@@ -15,7 +15,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatPaginator } from '@angular/material/paginator';
 import Swal from 'sweetalert2';
 
-import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlarmsService } from '../../../core/services/alarms.service';
 import { Alarm } from '../../../shared/models/alarm.model';
 
@@ -25,6 +25,7 @@ import { Alarm } from '../../../shared/models/alarm.model';
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
@@ -91,8 +92,8 @@ export class AlarmsPageComponent {
       params.to_date = value.to_date.toISOString();
     }
 
-    if (value.severity) {
-      params.severity = value.severity;
+    if (value.severity !== null && value.severity !== '') {
+      params.severity = Number(value.severity);
     }
 
     if (value.tag) {
@@ -129,25 +130,25 @@ export class AlarmsPageComponent {
     });
   }
 
-getSeverityClass(severity: number): string {
-  return `severity-${severity}`;
-}
-
-getSeverityLabel(severity: number): string {
-  switch (severity) {
-    case 1: return 'Crítica';
-    case 2: return 'Alta';
-    case 3: return 'Media';
-    case 4: return 'Baja';
-    default: return '-';
+  getSeverityClass(severity: number): string {
+    return `severity-${severity}`;
   }
-}
 
-onPageChange(event: any) {
-  this.limit = event.pageSize;
-  this.offset = event.pageIndex * event.pageSize;
-  this.applyFilters();
-}
+  getSeverityLabel(severity: number): string {
+    switch (severity) {
+      case 1: return 'Crítica';
+      case 2: return 'Alta';
+      case 3: return 'Media';
+      case 4: return 'Baja';
+      default: return '-';
+    }
+  }
+
+  onPageChange(event: any) {
+    this.limit = event.pageSize;
+    this.offset = event.pageIndex * event.pageSize;
+    this.applyFilters();
+  }
 
 
 }
